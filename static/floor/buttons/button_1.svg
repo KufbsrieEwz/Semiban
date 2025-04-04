@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Background -->
+  <rect width="64" height="64" fill="#C8C8C8"/>
+  <line x1="0" y1="0" x2="64" y2="0" stroke="#D8D8D8" stroke-width="1"/>
+  <line x1="0" y1="16" x2="64" y2="16" stroke="#D8D8D8" stroke-width="1"/>
+  <line x1="0" y1="32" x2="64" y2="32" stroke="#D8D8D8" stroke-width="1"/>
+  <line x1="0" y1="48" x2="64" y2="48" stroke="#D8D8D8" stroke-width="1"/>
+  <line x1="0" y1="64" x2="64" y2="64" stroke="#D8D8D8" stroke-width="1"/>
+  <line x1="0" y1="0" x2="0" y2="64" stroke="#D8D8D8" stroke-width="1"/>
+  <line x1="16" y1="0" x2="16" y2="64" stroke="#D8D8D8" stroke-width="1"/>
+  <line x1="32" y1="0" x2="32" y2="64" stroke="#D8D8D8" stroke-width="1"/>
+  <line x1="48" y1="0" x2="48" y2="64" stroke="#D8D8D8" stroke-width="1"/>
+  <line x1="64" y1="0" x2="64" y2="64" stroke="#D8D8D8" stroke-width="1"/>
+  
+  <!-- Button outline -->
+  <circle cx="32" cy="32" r="20" fill="#333333" stroke="#999999" stroke-width="2"/>
+  
+  <!-- Button face (unpressed) -->
+  <circle cx="32" cy="32" r="16" fill="#ff5555" stroke="#bb3333" stroke-width="2"/>
+</svg>
