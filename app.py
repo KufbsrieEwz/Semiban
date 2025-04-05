@@ -4,6 +4,7 @@ from logic import SemibanLogic
 app = Flask(__name__)
 game = SemibanLogic()
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
