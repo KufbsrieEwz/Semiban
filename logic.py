@@ -54,7 +54,8 @@ floor_extra = [ # 3rd floor
 
 def get_all(tile_code):
     # To only take the code for the first three, use _ to ignore the other tile codes.
-    return tile_code[0], tile_code[1], tile_code[5], tile_code[2:4], tile_code[5]
+    # object, wall, floor (entirety), floor type (button, door, target, floor), floor class (win, number, master, all), floor extra attribute (direction, inversion, none)
+    return tile_code[0], tile_code[1], tile_code[2:5], tile_code[2], tile_code[3], tile_code[5]
 
 class SemibanLogic:
     def __init__(self):
