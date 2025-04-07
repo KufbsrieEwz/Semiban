@@ -133,24 +133,37 @@ class SemibanLogic:
                 else:
                     pressed_classes.append(cClass)
         
+        self.change_doors()
         
+    def change_doors(self):
         for y in self.board:
             for x in self.board[y]:
                 cell = self.board[y][x]
                 cObject, cWall, _, cType, cClass, cExtra = get_all(cell)
-                cell_start = cObject + cWall
-                floor_end = cClass + cExtra
+                open = cObject + cWall + 'd' + cClass + cExtra
+                closed = cObject + cWall + 'D' + cClass + cExtra
+                # please do not critisize the insane use of nested if statements it makes it easier for me to think and slightly easier to read imo
                 if cType == 'D': # closed
                     if 'M' in pressed_classes: # master button opens
-                        self.board[y][x] = cell_start + 'd' + floor_end
+                        if not cExtra == 'I':
+                            self.board[y][x] = open
                     elif cClass in pressed_classes:
-                        self.board[y][x] = cell_start + 'd' + floor_end
+                        if not cExtra == 'I':
+                            self.board[y][x] = open
+                    else:
+                        if cExtra == 'I':
+                            self.board[y][x] = open
                 elif cType == 'd': # open
-                    if 'M' in pressed_classes: # do not close if master button is open
-                        pass
+                    if 'M' in pressed_classes:
+                        if cExtra == 'I': # if master button is pressed and the door is inverted, it should close
+                            self.board[y][x] = closed
                     elif cClass not in pressed_classes:
-                        if cObject == '.': # if not obstructed, because if it is then it should stay open
-                            self.board[y][x] = cell_start + 'D' + floor_end
+                        if not cExtra == 'I': # if the class is not pressed, it should close if not inverted.
+                            if cObject == '.': # also if not obstructed, because if it is then it should stay open
+                                self.board[y][x] = closed
+                    else:
+                        if cExtra == 'I': # if the class is pressed, and it is inverted, it should close.
+                            self.board[y][x] = closed
         
     def move_player(self, dir):
         if not self.won:
