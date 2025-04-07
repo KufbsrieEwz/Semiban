@@ -251,11 +251,13 @@ let sprites = [
         'C': 'https://kufbsrieewz.github.io/Semiban/static/objs/crate.png',
         'M': 'https://kufbsrieewz.github.io/Semiban/static/objs/multipush.png',
         'I': 'https://kufbsrieewz.github.io/Semiban/static/objs/ice.png',
+        '.': ''
     },
     {
         '#': 'https://kufbsrieewz.github.io/Semiban/static/walls/wall.png',
         'S': 'https://kufbsrieewz.github.io/Semiban/static/walls/semiwall.png',
         '^': 'https://kufbsrieewz.github.io/Semiban/static/walls/spike.png',
+        '.': ''
     }
 ]
 for (let i of objs) {
@@ -271,6 +273,8 @@ function draw() {
             let tile = tilemap[y][x]
             let img = new Image()
             img.src = sprites[0][tile[0]]
+            drawImg(img, Vector2.zero, Vector2.unit.multiply(100), new Vector2(x, y).multiply(20), Vector2.unit.multiply(20))
+            img.src = sprites[1][tile[1]]
             drawImg(img, Vector2.zero, Vector2.unit.multiply(100), new Vector2(x, y).multiply(20), Vector2.unit.multiply(20))
             if (tile[2] == 'B') {
                 if (+tile[3] != NaN) {
