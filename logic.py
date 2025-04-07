@@ -66,6 +66,8 @@ class SemibanLogic:
         self.targets = 0
         self.fulfilled = 0
         self.won = False
+        self.states = []
+        self.parse_level(levels[self.level-1])
 
     def parse_level(self, level):
         board = []
@@ -76,6 +78,34 @@ class SemibanLogic:
                     parsed_row.append(cell)
             board.append(parsed_row)
         self.board = board
+
+    def save_state(self):
+        self.states.append(self.board)
+
+    def restart(self):
+        self.board = self.states[0]
+        self.states = []
+        self.moves = 0
+        self.targets = 0
+        self.fulfilled = 0
+        self.won = False
+        self.check_win()
+        self.check_button()
+        self.save_state()
+    
+    def undo(self):
+        self.board.pop()
+        self.board = self.states[-1]
+        self.moves -= 1
+        self.check_win() # shouldn't be needed
+        self.check_button()
+
+    def next_level(self):
+        self.level += 1
+        self.parse_level(levels[self.level-1])
+        self.states = []
+        self.save_state()
+        self.restart()
 
     def check_win(self):
         fulfilled = 0
@@ -173,9 +203,8 @@ class SemibanLogic:
                 'left': (-1, 0),
                 'right': (1, 0)
             }[dir]
-            # x, y = player position
-            # move_x, move_y = x + dx, y + dy
-            """
+            x, y = self.x, self.y
+            move_x, move_y = x + dx, y + dy
             move_cell = self.board[move_y][move_x]
             player_cell = self.board[y][x]
             semiwall = False
@@ -207,13 +236,10 @@ class SemibanLogic:
             if not spike:
                 # move the player to the new position
                 self.board[move_y][move_x] = 'P.' + pFloor
-            """
             self.moves += 1
             self.check_button()
-            #self.save_state()
+            self.save_state()
             self.won = self.check_win()
-
-        pass
 
     def crate(self, move_x, move_y, dx, dy):
         push_x, push_y = move_x + dx, move_y + dy
