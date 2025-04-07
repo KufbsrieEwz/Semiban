@@ -255,7 +255,7 @@ let sprites = [
     {
         '#': 'https://kufbsrieewz.github.io/Semiban/static/walls/wall.png',
         'S': 'https://kufbsrieewz.github.io/Semiban/static/walls/semiwall.png',
-        '^': ''
+        '^': 'https://kufbsrieewz.github.io/Semiban/static/walls/spike.png',
     }
 ]
 for (let i of objs) {
@@ -276,7 +276,7 @@ function draw() {
                 if (+tile[3] != NaN) {
                     img.src = `https://kufbsrieewz.github.io/Semiban/static/floor/button${tile[3]}.png`
                 } else if (tile[3] == 'M') {
-                    img.src = `https://kufbsrieewz.github.io/Semiban/static/floor/buttonmaster`
+                    img.src = `https://kufbsrieewz.github.io/Semiban/static/floor/buttonmaster.png`
                 }
             }
         }
