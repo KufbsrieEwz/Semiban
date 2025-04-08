@@ -274,20 +274,25 @@ function draw() {
             let tile = tilemap[y][x]
             let img = new Image()
             if (tile.slice(2, 5) == '...') {
+                img = new Image()
                 img.src = 'https://kufbsrieewz.github.io/Semiban/static/assets_png/floor.png'
-                drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(20), Vector2.unit.multiply(20))
+                drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(35), Vector2.unit.multiply(35))
             }
             if (tile[2] == 'B') {
                 if (+tile[3] != NaN) {
+                    img = new Image()
                     img.src = `https://kufbsrieewz.github.io/Semiban/static/assets_png/button${tile[3]}.png`
                 } else if (tile[3] == 'M') {
+                    img = new Image()
                     img.src = `https://kufbsrieewz.github.io/Semiban/static/assets_png/buttonmaster.png`
                 }
             }
+            img = new Image()
             img.src = sprites[0][tile[0]]
-            drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(20), Vector2.unit.multiply(20))
+            drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(35), Vector2.unit.multiply(35))
+            img = new Image()
             img.src = sprites[1][tile[1]]
-            drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(20), Vector2.unit.multiply(20))
+            drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(35), Vector2.unit.multiply(35))
         }
     }
 }
@@ -304,15 +309,29 @@ window.addEventListener('mouseup', (e) => {
 })
 window.addEventListener('mousemove', function (event) {
     mouse = new Vector2(event.x, event.y)
-    if (isDragging && mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap.length, tilemap[0].length).multiply(20))) {
+    if (isDragging && mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap.length, tilemap[0].length).multiply(35))) {
         if (tileType.includes('?')) {
             for (let i = 0; i < 5; i++) {
                 if (tileType[i] != '?') {
-                    tilemap[mouse.multiply(1 / 20).floor().y][mouse.multiply(1 / 20).floor().x][i] = tileType[i]
+                    tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x][i] = tileType[i]
                 }
             }
         } else {
-            tilemap[mouse.multiply(1 / 20).floor().y][mouse.multiply(1 / 20).floor().x] = tileType
+            tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x] = tileType
+        }
+    }
+})
+window.addEventListener('click', function (event) {
+    mouse = new Vector2(event.x, event.y)
+    if (mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap.length, tilemap[0].length).multiply(35))) {
+        if (tileType.includes('?')) {
+            for (let i = 0; i < 5; i++) {
+                if (tileType[i] != '?') {
+                    tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x][i] = tileType[i]
+                }
+            }
+        } else {
+            tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x] = tileType
         }
     }
 })
@@ -320,15 +339,15 @@ window.addEventListener('keypress', function (event) {
     switch (event.key) {
         case ' ':
             let nextTileType = this.prompt('Which tile would you like to draw next? Enter a space character to see the options.')
-            while (!tileList.includes(nextTileType)) {
+            while (!(tileList.includes(nextTileType))) {
                 if (nextTileType == ' ') {
                     this.open('https://kufbsrieewz.github.io/Semiban/tileList.txt')
                     nextTileType = this.prompt('Which tile would you like to draw next? Enter a space character to see the options.')
                 }
-                if (!tileList.includes(nextTileType)) {
+                if (!(tileList.includes(nextTileType))) {
                     if (nextTileType == 'e') {
                         // exprot
-                    } else if (nextTileType == 'exit') {
+                    } else if (nextTileType == 'exit' || nextTileType == '' || nextTileType == null || nextTileType == undefined) {
                         break
                     } else {
                         this.alert('Sorry, I don\'t think that is a legitimate tile! It is kace censcativ!')
@@ -336,7 +355,11 @@ window.addEventListener('keypress', function (event) {
                     }
                 }
             }
-            tileType = nextTileType
-            break
+            if (nextTileType == 'exit' || nextTileType == '' || nextTileType == null || nextTileType == undefined) {
+                break
+            } else {
+                tileType = nextTileType
+                break
+            }
     }
 })
