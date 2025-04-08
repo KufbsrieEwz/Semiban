@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    fetch('/board')
-        // .then
-        .catch(error => console.error(error))
-        
-    // im gonna be honest i completely forgot how to transfer variables from python to js
+    /*
+    use fetch and then the route from app.py
+    python cant be that hard to read right
+    if ur confused about something or you need something added lmk
+    */
 });
