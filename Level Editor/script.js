@@ -90,28 +90,13 @@ function write(text, pos, r, g, b, a) {
 function clear() {
     c.clearRect(0, 0, window.innerWidth, window.innerHeight)
 }
-let tilemap = [
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-    ['.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', '.....', ],
-]
+let tilemap = []
+for (let y = 0; y < 20; y++) {
+    tilemap[y] = []
+    for (let x = 0; x < 20; x++) {
+        tilemap[y][x] = '..---'
+    }
+}
 /*
     First Character: Object element
 P: player
@@ -171,6 +156,7 @@ let flos = [
     'B8.',
     'B9.',
     'BM.',
+    'BA.',
     'D0.',
     'D1.',
     'D2.',
@@ -279,13 +265,24 @@ function draw() {
                 drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(35), Vector2.unit.multiply(35))
             }
             if (tile[2] == 'B') {
-                if (+tile[3] != NaN) {
-                    img = new Image()
-                    img.src = `https://kufbsrieewz.github.io/Semiban/static/assets_png/button${tile[3]}.png`
-                } else if (tile[3] == 'M') {
-                    img = new Image()
-                    img.src = `https://kufbsrieewz.github.io/Semiban/static/assets_png/buttonmaster.png`
-                }
+                img = new Image()
+                img.src = `https://kufbsrieewz.github.io/Semiban/static/assets_png/button/${tile[3]}.png`
+                drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(35), Vector2.unit.multiply(35))
+            }
+            if (tile[2] == 'D') {
+                img = new Image()
+                img.src = `https://kufbsrieewz.github.io/Semiban/static/assets_png/closed/${tile[3]}.png`
+                drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(35), Vector2.unit.multiply(35))
+            }
+            if (tile.slice(2, 5) == 'T..') {
+                img = new Image()
+                img.src = `https://kufbsrieewz.github.io/Semiban/static/assets_png/target.png`
+                drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(35), Vector2.unit.multiply(35))
+            }
+            if (tile.slice(2, 5) == 'TW.') {
+                img = new Image()
+                img.src = `https://kufbsrieewz.github.io/Semiban/static/assets_png/win_tile.png`
+                drawImg(img, Vector2.zero, Vector2.unit.multiply(64), new Vector2(x, y).multiply(35), Vector2.unit.multiply(35))
             }
             img = new Image()
             img.src = sprites[0][tile[0]]
@@ -311,11 +308,13 @@ window.addEventListener('mousemove', function (event) {
     mouse = new Vector2(event.x, event.y)
     if (isDragging && mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap.length, tilemap[0].length).multiply(35))) {
         if (tileType.includes('?')) {
+            newTile = tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x].split('')
             for (let i = 0; i < 5; i++) {
                 if (tileType[i] != '?') {
-                    tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x][i] = tileType[i]
+                    newTile[i] = tileType[i]
                 }
             }
+            tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x] = newTile.join('')
         } else {
             tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x] = tileType
         }
@@ -325,11 +324,13 @@ window.addEventListener('click', function (event) {
     mouse = new Vector2(event.x, event.y)
     if (mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap.length, tilemap[0].length).multiply(35))) {
         if (tileType.includes('?')) {
+            newTile = tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x].split('')
             for (let i = 0; i < 5; i++) {
                 if (tileType[i] != '?') {
-                    tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x][i] = tileType[i]
+                    newTile[i] = tileType[i]
                 }
             }
+            tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x] = newTile.join('')
         } else {
             tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x] = tileType
         }
@@ -347,6 +348,19 @@ window.addEventListener('keypress', function (event) {
                 if (!(tileList.includes(nextTileType))) {
                     if (nextTileType == 'e') {
                         // exprot
+                        let exportData = []
+                        for (let y = 0; y < tilemap.length; y++) {
+                            exportData.push(tilemap[y].join(' '))
+                        }
+                        this.document.body.innerHTML = JSON.stringify(exportData)
+                        navigator.clipboard.writeText(JSON.stringify(exportData))
+                            .then(() => alert("Level data copied to clipboard!"))
+                            .catch(err => {
+                                console.error("Copy failed:", err)
+                                alert("Failed to copy level data.")
+                            }
+                            )
+                        break
                     } else if (nextTileType == 'exit' || nextTileType == '' || nextTileType == null || nextTileType == undefined) {
                         break
                     } else {
@@ -355,7 +369,7 @@ window.addEventListener('keypress', function (event) {
                     }
                 }
             }
-            if (nextTileType == 'exit' || nextTileType == '' || nextTileType == null || nextTileType == undefined) {
+            if (nextTileType == 'e' || nextTileType == 'exit' || nextTileType == '' || nextTileType == null || nextTileType == undefined) {
                 break
             } else {
                 tileType = nextTileType
