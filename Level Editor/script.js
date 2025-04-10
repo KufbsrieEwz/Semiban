@@ -128,6 +128,7 @@ let mouse = Vector2.zero
 let tileType = '.#...'
 let tileList = []
 let actions = []
+let reactions = []
 let objs = [
     'P',
     'C',
@@ -312,6 +313,7 @@ window.addEventListener('mousemove', function (event) {
     if (isDragging && mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap[0].length, tilemap.length).multiply(35))) {
         if (tileType != tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x]) {
             actions.push([mouse.multiply(1 / 35).floor(), tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x]])
+            reactions = []
         }
         if (tileType.includes('?')) {
             newTile = tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x].split('')
@@ -331,6 +333,7 @@ window.addEventListener('click', function (event) {
     if (mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap[0].length, tilemap.length).multiply(35))) {
         if (tileType != tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x]) {
             actions.push([mouse.multiply(1 / 35).floor(), tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x]])
+            reactions = []
         }
         if (tileType.includes('?')) {
             newTile = tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x].split('')
@@ -402,8 +405,16 @@ window.addEventListener('keypress', function (event) {
         case 'z':
             // undo
             let i = actions[actions.length-1][0]
+            reactions.push([i, tilemap[i.y][i.x]])
             tilemap[i.y][i.x] = actions[actions.length-1][1]
             actions.splice(actions.length-1, 1)
+            break
+        case 'Z':
+            // redo
+            let j = reactions[reactions.length-1][0]
+            actions.push([j, tilemap[j.y][j.x]])
+            tilemap[j.y][j.x] = reactions[reactions.length-1][1]
+            reactions.splice(reactions.length-1, 1)
             break
         case '-':
             tileType = '..---'
