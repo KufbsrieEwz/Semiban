@@ -91,10 +91,12 @@ function clear() {
     c.clearRect(0, 0, window.innerWidth, window.innerHeight)
 }
 let tilemap = []
-for (let y = 0; y < 20; y++) {
+let yLen = +prompt()
+let xLen = +prompt()
+for (let y = 0; y < +yLen; y++) {
     tilemap[y] = []
-    for (let x = 0; x < 20; x++) {
-        tilemap[y][x] = '..---'
+    for (let x = 0; x < +xLen; x++) {
+        tilemap[y][x] = '.....'
     }
 }
 /*
@@ -125,6 +127,7 @@ DA: door all (almost done implementing)
 let mouse = Vector2.zero
 let tileType = '.#...'
 let tileList = []
+let actions = []
 let objs = [
     'P',
     'C',
@@ -306,7 +309,10 @@ window.addEventListener('mouseup', (e) => {
 })
 window.addEventListener('mousemove', function (event) {
     mouse = new Vector2(event.x, event.y)
-    if (isDragging && mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap.length, tilemap[0].length).multiply(35))) {
+    if (isDragging && mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap[0].length, tilemap.length).multiply(35))) {
+        if (tileType != tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x]) {
+            actions.push([mouse.multiply(1 / 35).floor(), tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x]])
+        }
         if (tileType.includes('?')) {
             newTile = tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x].split('')
             for (let i = 0; i < 5; i++) {
@@ -322,7 +328,10 @@ window.addEventListener('mousemove', function (event) {
 })
 window.addEventListener('click', function (event) {
     mouse = new Vector2(event.x, event.y)
-    if (mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap.length, tilemap[0].length).multiply(35))) {
+    if (mouse.inBoundsRect(Vector2.zero, new Vector2(tilemap[0].length, tilemap.length).multiply(35))) {
+        if (tileType != tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x]) {
+            actions.push([mouse.multiply(1 / 35).floor(), tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x]])
+        }
         if (tileType.includes('?')) {
             newTile = tilemap[mouse.multiply(1 / 35).floor().y][mouse.multiply(1 / 35).floor().x].split('')
             for (let i = 0; i < 5; i++) {
@@ -375,5 +384,80 @@ window.addEventListener('keypress', function (event) {
                 tileType = nextTileType
                 break
             }
+        case 'e':
+            // exprot
+            let exportData = []
+            for (let y = 0; y < tilemap.length; y++) {
+                exportData.push(tilemap[y].join(' '))
+            }
+            this.document.body.innerHTML = JSON.stringify(exportData)
+            navigator.clipboard.writeText(JSON.stringify(exportData))
+                .then(() => alert("Level data copied to clipboard!"))
+                .catch(err => {
+                    console.error("Copy failed:", err)
+                    alert("Failed to copy level data.")
+                }
+                )
+            break
+        case 'z':
+            // undo
+            let i = actions[actions.length-1][0]
+            tilemap[i.y][i.x] = actions[actions.length-1][1]
+            actions.splice(actions.length-1, 1)
+            break
+        case '-':
+            tileType = '..---'
+            break
+        case '.':
+            tileType = '.....'
+            break
+        case 'p':
+            tileType = 'P????'
+            break
+        case 'P':
+            tileType = 'P????'
+            break
+        case 'c':
+            tileType = 'C????'
+            break
+        case 'C':
+            tileType = 'C????'
+            break
+        case 'i':
+            tileType = 'I????'
+            break
+        case 'I':
+            tileType = 'I????'
+            break
+        case 'm':
+            tileType = 'M????'
+            break
+        case 'M':
+            tileType = 'M????'
+            break
+        case '#':
+            tileType = '?#???'
+            break
+        case '^':
+            tileType = '?^???'
+            break
+        case 's':
+            tileType = '?S???'
+            break
+        case 'S':
+            tileType = '?S???'
+            break
+        case 'w':
+            tileType = '??TW.'
+            break
+        case 'W':
+            tileType = '??TW.'
+            break
+        case 't':
+            tileType = '??T..'
+            break
+        case 'T':
+            tileType = '??T..'
+            break
     }
 })
