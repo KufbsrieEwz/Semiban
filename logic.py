@@ -1,3 +1,5 @@
+from levels import levels
+
 objects = [ # 1st char
     'P',
     'C',

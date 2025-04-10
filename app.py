@@ -26,13 +26,13 @@ def assets(filename):
 
 @app.route('/board')
 def get_board():
-    board = game.board()
+    board = game.board
     return jsonify(board)
 
 @app.route('/keypress', methods=['POST'])
 def handle_keypress():
-    data = request.data
-    key = data.key
+    data = request.json
+    key = data.get('key')
 
 
 if __name__ == '__main__':
