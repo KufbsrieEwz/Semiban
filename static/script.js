@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if ur confused about something or you need something added lmk
     */
     function getBoard() {
-        fetch('/board')
+        fetch('https://uphri.pythonanywhere.com/board')
             .then(response => response.json())
             .then(data => {
                 tilemap = data
