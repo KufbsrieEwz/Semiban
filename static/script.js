@@ -97,9 +97,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     python cant be that hard to read right
     if ur confused about something or you need something added lmk
     */
-    // here is some working code
     function getBoard() {
-        fetch('127.0.0.1/board')
+        // test 2
+        const serverUrl = window.location.origin;
+        fetch(serverUrl + '/board')
             .then(response => response.json())
             .then(data => {
                 tilemap = data
