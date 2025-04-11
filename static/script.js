@@ -91,28 +91,21 @@ function clear() {
     c.clearRect(0, 0, window.innerWidth, window.innerHeight)
 }
 let tilemap
-document.addEventListener('DOMContentLoaded', (event) => {
-    /*
-    use fetch and then the route from app.py
-    python cant be that hard to read right
-    if ur confused about something or you need something added lmk
-    */
-    function getBoard() {
-        fetch('https://uphri.pythonanywhere.com/board')
-            .then(response => response.json())
-            .then(data => {
-                tilemap = data
-                console.log(tilemap)
-            })
-            .catch(error => {
-                console.log('nice error', error)
-            });
-    };
-
-    getBoard();
-});
+function getBoard() {
+    fetch('https://uphri.pythonanywhere.com/board')
+        .then(response => response.json())
+        .then(data => {
+            tilemap = data
+            console.log(tilemap)
+        })
+        .catch(error => {
+            console.log('nice error', error)
+        })
+}
+getBoard()
 function draw() {
     clear()
+    getBoard()
     for (let y = 0; y < tilemap.length; y++) {
         for (let x = 0; x < tilemap[y].length; x++) {
             let tile = tilemap[y][x]
