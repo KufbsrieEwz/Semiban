@@ -98,11 +98,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if ur confused about something or you need something added lmk
     */
     function getBoard() {
-        // will ai carry
-        const baseUrl = window.location.origin.includes('github.io')
-        ? 'http://localhost:5000' // Use Flask backend locally
-        : ''; // Use relative path for Flask when deployed
-        fetch(`${baseUrl}/board`)
+        fetch('/board')
             .then(response => response.json())
             .then(data => {
                 tilemap = data
