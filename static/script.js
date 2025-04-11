@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     */
     // here is some working code
     function getBoard() {
-        fetch('/board')
+        fetch('127.0.0.1/board')
             .then(response => response.json())
             .then(data => {
                 tilemap = data
