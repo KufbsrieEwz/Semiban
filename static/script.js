@@ -90,7 +90,7 @@ function write(text, pos, r, g, b, a) {
 function clear() {
     c.clearRect(0, 0, window.innerWidth, window.innerHeight)
 }
-let tilemap
+let tilemap = [[]]
 function getBoard() {
     fetch('https://uphri.pythonanywhere.com/board')
         .then(response => response.json())
