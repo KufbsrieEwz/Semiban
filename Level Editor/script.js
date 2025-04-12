@@ -91,12 +91,12 @@ function clear() {
     c.clearRect(0, 0, window.innerWidth, window.innerHeight)
 }
 let tilemap = []
-let yLen = +prompt()
-let xLen = +prompt()
+let yLen = +prompt('y?')
+let xLen = +prompt('x?')
 for (let y = 0; y < +yLen; y++) {
     tilemap[y] = []
     for (let x = 0; x < +xLen; x++) {
-        tilemap[y][x] = '.....'
+        tilemap[y][x] = '..---'
     }
 }
 /*
@@ -125,7 +125,7 @@ DM.: door master
 DA: door all (almost done implementing)
 */
 let mouse = Vector2.zero
-let tileType = '.#...'
+let tileType = '.....'
 let tileList = []
 let actions = []
 let reactions = []
@@ -423,34 +423,34 @@ window.addEventListener('keypress', function (event) {
             tileType = '.....'
             break
         case 'p':
-            tileType = 'P????'
+            tileType = 'P.???'
             break
         case 'P':
-            tileType = 'P????'
+            tileType = 'P.???'
             break
         case 'c':
-            tileType = 'C????'
+            tileType = 'C.???'
             break
         case 'C':
-            tileType = 'C????'
+            tileType = 'C.???'
             break
         case 'i':
-            tileType = 'I????'
+            tileType = 'I.???'
             break
         case 'I':
-            tileType = 'I????'
+            tileType = 'I.???'
             break
         case 'm':
-            tileType = 'M????'
+            tileType = 'M.???'
             break
         case 'M':
-            tileType = 'M????'
+            tileType = 'M.???'
             break
         case '#':
-            tileType = '?#???'
+            tileType = '.#???'
             break
         case '^':
-            tileType = '?^???'
+            tileType = '.^???'
             break
         case 's':
             tileType = '?S???'
@@ -469,6 +469,9 @@ window.addEventListener('keypress', function (event) {
             break
         case 'T':
             tileType = '??T..'
+            break
+        case '?':
+            tileType = '?????'
             break
     }
 })
