@@ -91,6 +91,21 @@ function clear() {
     c.clearRect(0, 0, window.innerWidth, window.innerHeight)
 }
 let tilemap = [['..---']]
+let sprites = [
+    {
+        'P': 'https://kufbsrieewz.github.io/Semiban/static/assets_png/player.png',
+        'C': 'https://kufbsrieewz.github.io/Semiban/static/assets_png/crate.png',
+        'M': 'https://kufbsrieewz.github.io/Semiban/static/assets_png/multipush.png',
+        'I': 'https://kufbsrieewz.github.io/Semiban/static/assets_png/ice.png',
+        '.': ''
+    },
+    {
+        '#': 'https://kufbsrieewz.github.io/Semiban/static/assets_png/wall.png',
+        'S': 'https://kufbsrieewz.github.io/Semiban/static/assets_png/semiwall.png',
+        '^': 'https://kufbsrieewz.github.io/Semiban/static/assets_png/spike.png',
+        '.': ''
+    }
+]
 function getBoard() {
     fetch('https://uphri.pythonanywhere.com/board')
         .then(response => response.json())
