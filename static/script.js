@@ -111,7 +111,6 @@ function getBoard() {
         .then(response => response.json())
         .then(data => {
             tilemap = data
-            console.log(tilemap)
         })
         .catch(error => {
             console.log('nice error', error)
